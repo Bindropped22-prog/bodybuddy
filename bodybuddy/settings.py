@@ -26,6 +26,7 @@ SECRET_KEY = 'django-insecure-1mo5ld1g@hbses)zg2mcvu5j%qye!o--&0yyabo-p38nsexf2m
 DEBUG = True
 
 ALLOWED_HOSTS = ['bodybuddy.fly.dev']
+CSRF_TRUSTED_ORIGINS = ['https://bodybuddy.fly.dev']
 
 
 # Application definition
