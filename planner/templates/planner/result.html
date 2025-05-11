@@ -1,0 +1,16 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Your BodyBuddy Plan</title>
+    <link rel="stylesheet" href="{% static 'planner/styles.css' %}">
+</head>
+<body>
+    <h1>🧠 Your Personalized Plan:</h1>
+    <div>
+        <p>{{ ai_response|linebreaks }}</p>
+    </div>
+    <a href="/">Back to Home</a>
+</body>
+</html>
