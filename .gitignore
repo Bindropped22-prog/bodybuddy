@@ -1,0 +1,23 @@
+# Ignore Python bytecode files
+__pycache__/
+*.pyc
+*.pyo
+
+# Ignore the Django migration files
+*.log
+*.sqlite3
+*.db
+
+# Ignore environment variables file (for sensitive info like API keys)
+.env
+
+# Ignore static files (if you're using them)
+staticfiles/
+
+# Ignore Docker files
+*.env
+Dockerfile
+docker-compose.yml
+
+# Ignore virtual environment
+venv/
