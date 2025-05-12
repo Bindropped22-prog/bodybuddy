@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-1mo5ld1g@hbses)zg2mcvu5j%qye!o--&0yyabo-p38nsexf2m'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['bodybuddy.fly.dev']
 CSRF_TRUSTED_ORIGINS = ['https://bodybuddy.fly.dev']
@@ -122,6 +122,9 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+STATICFILES_DIRS = [
+    BASE_DIR / 'planner' / 'static',
+]
 # Add STATIC_ROOT for static file collection in Docker
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 

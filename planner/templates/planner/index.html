@@ -3,32 +3,33 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BodyBuddy GPT</title>
     {% load static %}
     <link rel="stylesheet" href="{% static 'planner/styles.css' %}">
     <script src="https://cdn.lordicon.com/lordicon.js"></script>
-    <script src="{% static 'planner/main.js' %}"></script>
+    <script src="{% static 'C:\Users\bindr\bodybuddy\planner\static\planner\styles.css' %}"></script>
 </head>
 <body>
-    <h1>🏋️‍♂️ BodyBuddy GPT 🥗</h1>
-
-    <form method="POST" onsubmit="return handleSubmit(event)">
-        {% csrf_token %}
-        <input type="text" name="age" placeholder="Age" required><br>
-        <input type="text" name="gender" placeholder="Gender" required><br>
-        <input type="text" name="height" placeholder="Height" required><br>
-        <input type="text" name="weight" placeholder="Weight" required><br>
-        <input type="text" name="activity" placeholder="Activity level" required><br>
-        <input type="text" name="diet" placeholder="Dietary preferences" required><br>
-        <input type="text" name="goal" placeholder="Goal" required><br>
-        <input type="text" name="fitness_level" placeholder="Fitness level" required><br>
-        <select name="plan_type">
-            <option value="diet">Diet Plan</option>
-            <option value="workout">Workout Plan</option>
-        </select><br>
-        <button type="submit">Submit</button>
-    </form>
-
+    <div class="container">
+        <h1>🏋️‍♂️ BodyBuddy GPT 🥗</h1>
+            <form method="POST" onsubmit="return handleSubmit(event)">
+                {% csrf_token %}
+                <input type="text" name="age" placeholder="Age" required><br>
+                <input type="text" name="gender" placeholder="Gender" required><br>
+                <input type="text" name="height" placeholder="Height" required><br>
+                <input type="text" name="weight" placeholder="Weight" required><br>
+                <input type="text" name="activity" placeholder="Activity level" required><br>
+                <input type="text" name="diet" placeholder="Dietary preferences" required><br>
+                <input type="text" name="goal" placeholder="Goal" required><br>
+                <input type="text" name="fitness_level" placeholder="Fitness level" required><br>
+                <select name="plan_type">
+                    <option value="diet">Diet Plan</option>
+                    <option value="workout">Workout Plan</option>
+                </select><br>
+                <button type="submit">Submit</button>
+            </form>
+    </div>
     {% if ai_response %}
     <h2>AI Response</h2>
     <pre>{{ ai_response }}</pre>
