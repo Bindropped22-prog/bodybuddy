@@ -116,17 +116,19 @@ USE_I18N = True
 
 USE_TZ = True
 
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/5.2/howto/static-files/
-
 STATIC_URL = '/static/'
-
-STATICFILES_DIRS = [
-    BASE_DIR / 'planner' / 'static',
-]
-# Add STATIC_ROOT for static file collection in Docker
 STATIC_ROOT = BASE_DIR / 'staticfiles'
+
+# Enable WhiteNoise for serving static files in production
+MIDDLEWARE = [
+    'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
+    # your other middleware...
+]
+
+# Use WhiteNoise's compressed storage for efficient delivery
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
