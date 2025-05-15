@@ -5,34 +5,100 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BodyBuddy GPT</title>
-    {% load static %}
     <link rel="stylesheet" href="{% static 'planner/styles.css' %}">
     <script src="https://cdn.lordicon.com/lordicon.js"></script>
     <script src="{% static 'planner/main.js' %}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" defer></script>
 </head>
 <body>
     <div class="container">
         <h1>🏋️‍♂️ BodyBuddy GPT 🥗</h1>
-            <form method="POST" onsubmit="return handleSubmit(event)">
-                {% csrf_token %}
-                <input type="text" name="age" placeholder="Age" required><br>
-                <input type="text" name="gender" placeholder="Gender" required><br>
-                <input type="text" name="height" placeholder="Height" required><br>
-                <input type="text" name="weight" placeholder="Weight" required><br>
-                <input type="text" name="activity" placeholder="Activity level" required><br>
-                <input type="text" name="diet" placeholder="Dietary preferences" required><br>
-                <input type="text" name="goal" placeholder="Goal" required><br>
-                <input type="text" name="fitness_level" placeholder="Fitness level" required><br>
-                <select name="plan_type">
-                    <option value="diet">Diet Plan</option>
-                    <option value="workout">Workout Plan</option>
-                </select><br>
-                <button type="submit">Submit</button>
-            </form>
+        <form method="POST">
+            {% csrf_token %}
+
+            <!-- Age -->
+            <label for="age">Age:</label>
+            <select name="age" required>
+                <option value="" disabled selected>Select age</option>
+                {% for age in age_range %}
+                    <option value="{{ age }}">{{ age }}</option>
+                {% endfor %}
+            </select><br>
+
+            <!-- Gender -->
+            <label for="gender">Gender:</label>
+            <select name="gender" required>
+                <option value="" disabled selected>Select gender</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Non-binary">Non-binary</option>
+                <option value="Other">Other</option>
+            </select><br>
+
+            <!-- Height -->
+            <label for="height">Height:</label>
+            <select name="height" required>
+                <option value="" disabled selected>Select height</option>
+                {% for feet in height_feet %}
+                    {% for inches in height_inches %}
+                        <option value="{{ feet }}'{{ inches }}">{{ feet }}'{{ inches }}"</option>
+                    {% endfor %}
+                {% endfor %}
+            </select><br>
+
+            <!-- Weight -->
+            <label for="weight">Weight (lbs):</label>
+            <select name="weight" required>
+                <option value="" disabled selected>Select weight</option>
+                {% for weight in weight_range %}
+                    <option value="{{ weight }}">{{ weight }} lbs</option>
+                {% endfor %}
+            </select><br>
+
+            <!-- Daily Routine -->
+            <label for="activity">Tell me about your current daily routine (School, work, gym, etc.):</label>
+            <input type="text" name="activity" placeholder="e.g. I go to school and the gym, work part-time" required><br>
+
+            <!-- Diet -->
+            <label for="diet">Dietary Preferences:</label>
+            <select name="diet" multiple required>
+                <option value="Vegetarian">Vegetarian</option>
+                <option value="Vegan">Vegan</option>
+                <option value="Pescatarian">Pescatarian</option>
+                <option value="Keto">Keto</option>
+                <option value="Paleo">Paleo</option>
+                <option value="Gluten-Free">Gluten-Free</option>
+                <option value="Dairy-Free">Dairy-Free</option>
+                <option value="Low-Carb">Low-Carb</option>
+                <option value="Mediterranean">Mediterranean</option>
+                <option value="Other">Other</option>
+                <option value="None">None</option>
+            </select><br>
+
+            <!-- Goal -->
+            <label for="goal">Health Goal:</label>
+            <input type="text" name="goal" required><br>
+
+            <!-- Fitness Level -->
+            <label for="fitness_level">Fitness Level:</label>
+            <select name="fitness_level" required>
+                <option value="" disabled selected>Select fitness level</option>
+                <option value="Beginner">Beginner</option>
+                <option value="Intermediate">Intermediate</option>
+                <option value="Advanced">Advanced</option>
+            </select><br>
+
+            <!-- Workout Location -->
+            <label for="workout_location">Workout Location:</label>
+            <select name="workout_location" required>
+                <option value="" disabled selected>Select workout location</option>
+                <option value="Gym - Machines and Free Weights">Gym - Machines and Free Weights</option>
+                <option value="Home - Bodyweight or Minimal Equipment">Home - Bodyweight or Minimal Equipment</option>
+            </select><br>
+
+
+            <button type="submit">Submit</button>
+        </form>
     </div>
-    {% if ai_response %}
-    <h2>AI Response</h2>
-    <pre>{{ ai_response }}</pre>
-    {% endif %}
 </body>
 </html>

@@ -4,18 +4,16 @@ import openai
 from dotenv import load_dotenv
 
 # Load environment variables
-load_dotenv()  # Load your API key from a .env file
-
-# Set OpenAI API key
+load_dotenv()
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
-# Function to build the prompt for OpenAI API
+# Build the prompt
 def build_prompt(user_info, choice_type):
     if choice_type == "diet":
         return (
             f"Create a highly personalized diet plan for a {user_info['age']} year old {user_info['gender']}, "
-            f"{user_info['height']} ft tall, {user_info['weight']} lbs, "
-            f"who is {user_info['activity']} active. "
+            f"{user_info['height']} ft tall, {user_info['weight']} lbs. "
+            f"Their current daily routine: {user_info['activity']}. "
             f"Their goal is to {user_info['goal']}. "
             f"Dietary preferences: {user_info['diet']}. "
             f"Provide a detailed breakfast, lunch, dinner, and snack plan for one day, "
@@ -26,26 +24,26 @@ def build_prompt(user_info, choice_type):
             f"Create a {user_info['fitness_level']} workout routine for a {user_info['age']} year old {user_info['gender']}, "
             f"{user_info['height']} ft tall, {user_info['weight']} lbs. "
             f"Their goal is to {user_info['goal']}, with an activity level of {user_info['activity']}. "
-            f"Design a weekly schedule (5 days of training), "
-            f"and specify exercises, sets, and reps for each day."
+            f"They prefer working out at: {user_info['workout_location']}. "
+            f"Design a weekly schedule (5 days of training), and specify exercises, sets, and reps for each day."
         )
 
-# Function to interact with the OpenAI API
+
+# Call OpenAI
 def chat_with_ai(prompt):
     response = openai.ChatCompletion.create(
-        model="gpt-3.5-turbo",  # Or the latest model like "gpt-4"
+        model="gpt-4-turbo",
         messages=[
-            {"role": "system", "content": "You are a highly personalized fitness and nutrition assistant. Provide detailed and specific plans."},
+            {"role": "system", "content": "You are a highly personalized fitness and nutrition assistant. Provide detailed and specific plans. Take into account all user input."},
             {"role": "user", "content": prompt},
         ],
-        max_tokens=500  # Adjust the number of tokens as needed
+        max_tokens=800
     )
     return response['choices'][0]['message']['content'].strip()
 
-# View function for handling form and API interaction
+# Main view
 def index(request):
     if request.method == "POST":
-        # Get user input data from the form
         user_info = {
             "age": request.POST.get("age"),
             "gender": request.POST.get("gender"),
@@ -55,17 +53,25 @@ def index(request):
             "diet": request.POST.get("diet"),
             "goal": request.POST.get("goal"),
             "fitness_level": request.POST.get("fitness_level"),
+            "workout_location": request.POST.get("workout_location"),
         }
-        plan_type = request.POST.get("plan_type")
+       
+        diet_prompt = build_prompt(user_info, "diet")
+        workout_prompt = build_prompt(user_info, "workout")
 
-        # Build the prompt for OpenAI API based on user input
-        prompt = build_prompt(user_info, plan_type)
+        diet_response = chat_with_ai(diet_prompt)
+        workout_response = chat_with_ai(workout_prompt)
 
-        # Get the AI response
-        ai_response = chat_with_ai(prompt)
+        return render(request, "planner/result.html", {
+            "diet_response": diet_response,
+            "workout_response": workout_response
+        })
 
-        # Return the result to the result.html page with the response
-        return render(request, "planner/result.html", {"ai_response": ai_response})
 
-    # If it's a GET request, render the index.html page with the form
-    return render(request, "planner/index.html")
+    # For GET request, send data ranges to the template
+    return render(request, "planner/index.html", {
+        "age_range": range(13, 76),
+        "weight_range": range(90, 351, 1),
+        "height_feet": range(4, 8),
+        "height_inches": range(0, 12)
+    })

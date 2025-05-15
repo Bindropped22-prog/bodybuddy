@@ -55,3 +55,19 @@ button {
 button:hover {
     background-color: #0056b3;
 }
+
+/*Results.html styles*/
+.plan-box {
+    background-color: #f9f9f9;
+    padding: 20px;
+    margin-top: 20px;
+    border-radius: 8px;
+    line-height: 1.6;
+}
+
+.button-group {
+    margin-top: 30px;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}

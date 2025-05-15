@@ -18,3 +18,13 @@ primary_region = 'den'
   memory = '1gb'
   cpu_kind = 'shared'
   cpus = 1
+
+[deploy]
+  strategy = "rolling"
+
+[experimental]
+  auto_rollback = true
+
+[processes]
+  app = "gunicorn bodybuddy.wsgi:application --bind 0.0.0.0:8080"
+

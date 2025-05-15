@@ -22,5 +22,5 @@ RUN python manage.py collectstatic --noinput
 # Expose the port for Fly
 EXPOSE 8080
 
-# Set the command to run the Django app
-CMD ["gunicorn", "bodybuddy.wsgi:application", "--bind", "0.0.0.0:8080"]
+#Gunicorn setting
+CMD ["gunicorn", "bodybuddy.wsgi:application", "--bind", "0.0.0.0:8080", "--timeout", "60"]

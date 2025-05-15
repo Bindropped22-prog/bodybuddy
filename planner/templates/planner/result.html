@@ -6,12 +6,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Your BodyBuddy Plan</title>
     <link rel="stylesheet" href="{% static 'planner/styles.css' %}">
+    <script src="{% static 'planner/downloadPDF.js' %}" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" defer></script>
 </head>
 <body>
-    <h1>🧠 Your Personalized Plan:</h1>
-    <div>
-        <p>{{ ai_response|linebreaks }}</p>
+    <div class="container">
+        <h1>🧠 Your Personalized Plan</h1>
+
+        <!-- Plan content shown properly -->
+        <div id="plan-content" class="plan-box">
+            <h2>🥗 Diet Plan</h2>
+            <p>{{ diet_response|linebreaks }}</p>
+            
+            <h2>🏋️ Workout Plan</h2>
+            <p>{{ workout_response|linebreaks }}</p>            
+        </div>
+
+        <!-- Button below the content -->
+        <div class="button-group">
+            <button id="save-pdf-btn">Save as PDF</button>
+            <a href="/">← Back to Home</a>
+        </div>
     </div>
-    <a href="/">Back to Home</a>
 </body>
 </html>
